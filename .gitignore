@@ -1,0 +1,6 @@
+# gitignore를 작성하는 간단한 패턴들을 주석으로 정리해놓으면 좋겠다.
+비SPA방식인스타그램클론2.md
+db.sqlite3
+.vscode
+__pycache__
+media

@@ -1,0 +1,24 @@
+{% load bootstrap4 %}
+
+<div class="card">
+    {% if form_title %}
+        <div class="card-header">
+            {{ form_title }}
+        </div>
+    {% endif %}
+    <div class="card-body">
+        {% if form %}
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">
+                        {{ submit_label|default:"Submit" }}
+                    </button>
+                {% endbuttons %}
+            </form>
+        {% else %}
+            form 객체가 전달되지 않았습니다.
+        {% endif %}
+    </div>
+</div>
