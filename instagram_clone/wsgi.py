@@ -1,5 +1,5 @@
 """
-WSGI config for instagram project.
+WSGI config for instagram_clone project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -12,6 +12,6 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 # 수정됨
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'instagram.settings.prod')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'instagram_clone.settings.prod')
 
 application = get_wsgi_application()

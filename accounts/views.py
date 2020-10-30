@@ -5,9 +5,10 @@ from django.contrib.auth.views import (
     PasswordChangeView as AuthPasswordChangeView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from .forms import SignupForm, ProfileForm, PasswordChangeForm
+from .models import User
 
 login = LoginView.as_view(template_name="accounts/login_form.html")
 
@@ -53,4 +54,33 @@ class PasswordChangeView(LoginRequiredMixin, AuthPasswordChangeView):
         messages.success(self.request, "암호를 변경했습니다.")
         return super().form_valid(form)
 
+
 password_change = PasswordChangeView.as_view()
+
+
+@login_required
+def user_follow(request, username):
+
+    login_user = request.user
+    page_user = get_object_or_404(User, username=username, is_active=True)
+
+    login_user.following_set.add(page_user)
+    page_user.following_set.add(login_user)     # TODO: 왜 이렇게 해야만 정상적으로 동작하는건지 이해가 안된다. 내가 모델 구조를 잘 못 이해하고 있나?
+
+    messages.success(request, f"{page_user}님을 팔로우했습니다.")
+    redirect_url = request.META.get("HTTP_REFERER", "root")
+    return redirect(redirect_url)
+
+
+@login_required
+def user_unfollow(request, username):
+
+    login_user = request.user
+    page_user = get_object_or_404(User, username=username, is_active=True)
+
+    login_user.following_set.remove(page_user)
+    page_user.following_set.remove(login_user)
+
+    messages.success(request, f"{page_user}님을 언팔로우했습니다.")
+    redirect_url = request.META.get("HTTP_REFERER", "root")
+    return redirect(redirect_url)

@@ -28,7 +28,7 @@
                     <div class="col-sm-12">
                         <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white">
                             <h5 class="my-0 mr-md-auto font-weight-normal">
-                                <a href="/">
+                                <a href="{% url 'root' %}">
                                     <img src="{% static 'default/logo.png' %}">
                                 </a>
                             </h5>
@@ -54,11 +54,7 @@
                                     </svg>
                                 </a>
                                 <a class="p-2" href="{% url 'profile_edit' %}">
-                                    {% if user.avatar %}
-                                            <img style="width: 22px; height: 22px;" src={{ user.avatar.url }} alt="user avatar image" >
-                                    {% else %}
-                                            <img style="width: 22px; height: 22px;" src="{% static 'default/avatar.jpg' %}" alt="default avatar image" >
-                                    {% endif %}
+                                    <img class="rounded-circle" style="width: 22px; height: 22px;" src={% static 'default/avatar.jpg' %} alt="user avatar image" >
                                 </a>
                             </nav>
                         </div>

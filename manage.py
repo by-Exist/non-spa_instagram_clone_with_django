@@ -6,8 +6,8 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    # settings 파일을 분리하기 위해 수정됨. 'instagram.settings'
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'instagram.settings.dev')    
+    # settings 파일을 분리하기 위해 수정됨. 'instagram_clone.settings'
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'instagram_clone.settings.dev')    
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

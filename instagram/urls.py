@@ -1,22 +1,11 @@
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.contrib.auth.decorators import login_required
-from django.urls import path, include
-from django.views.generic import TemplateView
+from django.urls import path, re_path
+from . import views
+
+app_name = 'instagram'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include("accounts.urls")),
-    path('', login_required(TemplateView.as_view(template_name='root.html')), name='root'),
+    path('', views.index, name='index'),
+    path('post/new/', views.post_new, name='post_new'),
+    path('post/<int:pk>/', views.post_detail, name='post_detail'),
+    re_path(r'^(?P<username>[\w.@+-]+)/$', views.user_page, name='user_page'),
 ]
-
-# 디버그 모드일 때의 설정들
-if settings.DEBUG:
-    import debug_toolbar
-
-    urlpatterns += [
-        path("__debug__/", include(debug_toolbar.urls)),
-    ]
-    
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

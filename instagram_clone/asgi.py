@@ -1,5 +1,5 @@
 """
-ASGI config for instagram project.
+ASGI config for instagram_clone project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -12,6 +12,6 @@ import os
 from django.core.asgi import get_asgi_application
 
 # 수정됨
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'instagram.settings.prod')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'instagram_clone.settings.prod')
 
 application = get_asgi_application()
