@@ -9,10 +9,11 @@
             </div>
             <div class="col-sm-9">
                 {{ page_user.username }}
+                {% if request_user_is_page_user %}
                 <a href="{% url 'profile_edit' %}" class="btn btn-secondary btn-sm">
                     Edit Profile
                 </a>
-
+                {% endif %}
                 {% if is_follow %}
                     <a href="{% url 'user_unfollow' page_user.username %}">Unfollow</a>
                 {% else %}
@@ -22,13 +23,15 @@
                 <hr/>
                 {{ post_list_count }} posts, {{ follower_count }} followers, {{ following_count }} following
                 <hr/>
-                {{ page_user.name }}
+                {{ page_user.nickname }}
             </div>
         </div>
         <div class="row mt-3">
             {% for post in post_list %}
                 <div class="col-sm-4 mb-3">
-                    <img src="{% thumbnail post.photo 512x512 crop %}" alt="{{ post.caption }}" style="width:100%; height:100%;">
+                    <a href="{% url 'instagram:post_detail' post.pk %}">
+                        <img src="{% thumbnail post.photo 512x512 crop %}" alt="{{ post.caption }}" style="width:100%; height:100%;">
+                    </a>
                 </div>
             {% endfor %}
         </div>

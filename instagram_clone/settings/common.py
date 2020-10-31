@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -149,3 +150,5 @@ AUTH_USER_MODEL = "accounts.User"
 # debug_toolbar를 활용하기 위한 설정
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
 INTERNAL_IPS = ['127.0.0.1']
+
+LOGIN_REDIRECT_URL = 'root'

@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import (
-    LoginView, logout_then_login, 
+    LoginView, logout_then_login,
     PasswordChangeView as AuthPasswordChangeView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -12,9 +12,11 @@ from .models import User
 
 login = LoginView.as_view(template_name="accounts/login_form.html")
 
+
 def logout(request):
     messages.success(request, "로그아웃되었습니다.")
     return logout_then_login(request)
+
 
 def signup(request):
     if request.method == "POST":
@@ -31,6 +33,7 @@ def signup(request):
         "form": form,
     })
 
+
 @login_required
 def profile_edit(request):
     if request.method == "POST":
@@ -42,8 +45,9 @@ def profile_edit(request):
     else:
         form = ProfileForm(instance=request.user)
     return render(request, "accounts/profile_edit_form.html", {
-        "form":form,
+        "form": form,
     })
+
 
 class PasswordChangeView(LoginRequiredMixin, AuthPasswordChangeView):
     success_url = reverse_lazy("password_change")
@@ -65,7 +69,8 @@ def user_follow(request, username):
     page_user = get_object_or_404(User, username=username, is_active=True)
 
     login_user.following_set.add(page_user)
-    page_user.following_set.add(login_user)     # TODO: 왜 이렇게 해야만 정상적으로 동작하는건지 이해가 안된다. 내가 모델 구조를 잘 못 이해하고 있나?
+    # TODO: 왜 이렇게 해야만 정상적으로 동작하는건지 이해가 안된다. 내가 모델 구조를 잘 못 이해하고 있나?
+    page_user.following_set.add(login_user)
 
     messages.success(request, f"{page_user}님을 팔로우했습니다.")
     redirect_url = request.META.get("HTTP_REFERER", "root")

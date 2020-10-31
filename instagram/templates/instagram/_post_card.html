@@ -1,19 +1,70 @@
+{% load bootstrap4 instagram_tags humanize %}
+
 <div class="card">
     <div class="card-header">
         <img src="{{ post.author.avatar_url }}" style="width:32px; height:32px;">
         <a href="{% url 'instagram:user_page' post.author.username %}">
-            {{ post.author.name }}
+            {{ post.author.nickname }}
         </a>
     </div>
     <div class="card-body">
-        <img src="{{ post.photo.url }}" style="width:100%;">
-        {{ post.caption }}
+        <a href="{% url 'instagram:post_detail' post.pk %}">
+            <img src="{{ post.photo.url }}" style="width:100%;">
+        </a>
+        {% comment %} 커스텀 템플릿 태그를 활용한 부분. {% endcomment %}
+        <div>
+            {% if post|is_like_user:user %}
+                <a href="{% url 'instagram:post_unlike' post.pk %}" style="color: inherit;">
+                    <i class="fa fa-heart"></i>
+                </a>
+            {% else %}
+                <a href="{% url 'instagram:post_like' post.pk %}" style="color: inherit;">
+                    <i class="fa fa-heart-o"></i>
+                </a>
+            {% endif %}
+        </div>
+
+        <div id="post-{{ post.pk }}-comment-list" class="comment-list mt-3 mb-3">
+            {% for comment in post.comment_set.all %}
+                {% include "instagram/_comment.html" %}
+            {% endfor %}
+        </div>
+
+        <div>
+            {% for tag in post.tag_set.all %}
+                <div class="badge badge-primary">
+                    #{{ tag.name }}
+                </div>
+            {% endfor %}
+        </div>
+        <small class="text-muted">
+            {{ post.created_at_dt|naturaltime }}
+        </small>
     </div>
     <div class="card-footer">
-        {% for tag in post.tag_set.all %}
-            <div class="badge badge-primary">
-                #{{ tag.name }}
-            </div>
-        {% endfor %}
+        <form id="post-{{ post.pk }}-comment-form" action="{% url 'instagram:comment_new' post.pk %}" method="POST">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            <input type="submit" value="댓글 쓰기" class="btn btn-primary btn-block" />
+        </form>
+
+        {% comment %} Ajax를 활용한 부분. {% endcomment %}
+        <script>
+
+        $(function() {
+            var form_id = "post-{{ post.pk }}-comment-form";
+            $("#" + form_id).submit(function(e) {
+                e.preventDefault();
+                var options = {
+                    success: function(responseText, statusText, xhr, $form) {
+                        $("#post-{{ post.pk }}-comment-list").prepend(responseText);
+                    }
+                };
+                $(this).ajaxSubmit(options);
+            });
+        });
+
+        </script>
+        
     </div>
 </div>

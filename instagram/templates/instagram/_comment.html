@@ -1,0 +1,7 @@
+{% load humanize %}
+
+<div class="comment">
+    <strong>{{ comment.author.nickname }}</strong>
+    {{ comment.message }}
+    <small class="text-muted">{{ comment.created_at_dt|naturaltime }}</small>
+</div>

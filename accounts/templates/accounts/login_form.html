@@ -5,6 +5,11 @@
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
                 {% include "_form.html" with form_title="로그인" submit_label="로그인" %}
+                <a href="{% url 'signup' %}">
+                    <button class="btn btn-primary mt-3 pull-right">
+                        회원가입
+                    </button>
+                </a>
             </div>
         </div>
     </div>
