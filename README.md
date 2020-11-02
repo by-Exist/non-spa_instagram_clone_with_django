@@ -7,10 +7,15 @@
 * Django
 
 ## screenshot
+* index
 ![index](https://github.com/by-Exist/non-spa_instagram_clone_with_django/blob/master/github_image/index.png?raw=true)
+* join
 ![join](https://github.com/by-Exist/non-spa_instagram_clone_with_django/blob/master/github_image/join.png?raw=true)
+* login
 ![login](https://github.com/by-Exist/non-spa_instagram_clone_with_django/blob/master/github_image/login.png?raw=true)
+* post
 ![post](https://github.com/by-Exist/non-spa_instagram_clone_with_django/blob/master/github_image/post.png?raw=true)
+* user page
 ![user_page](https://github.com/by-Exist/non-spa_instagram_clone_with_django/blob/master/github_image/user_page.png?raw=true)
 
 ## 여담
